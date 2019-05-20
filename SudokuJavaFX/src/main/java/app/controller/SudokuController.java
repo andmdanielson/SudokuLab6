@@ -241,6 +241,8 @@ public class SudokuController implements Initializable {
 				boolean success = false;
 				if (db.hasContent(myTrashCanFormat)) {
 					Cell CellFrom = (Cell) db.getContent(myTrashCanFormat);
+					
+					game.getSudoku().getPuzzle()[CellFrom.getiRow()][CellFrom.getiCol()] = 0;
 
 					game.getSudoku().PrintPuzzle();
 					event.setDropCompleted(success);
@@ -276,6 +278,7 @@ public class SudokuController implements Initializable {
 	private GridPane BuildSudokuGrid() {
 
 		Sudoku s = this.game.getSudoku();
+		//s.PrintPuzzle();
 
 		SudokuStyler ss = new SudokuStyler(s);
 		GridPane gridPaneSudoku = new GridPane();
@@ -408,7 +411,7 @@ public class SudokuController implements Initializable {
 							
 							
 							
-							game.getSudoku().getPuzzle()[CellFrom.getiRow()][CellFrom.getiCol()] = CellFrom.getiCellValue();
+							game.getSudoku().getPuzzle()[CellTo.getiRow()][CellTo.getiCol()] = CellFrom.getiCellValue();
 							
 							
 							success = true;
