@@ -227,9 +227,14 @@ public class SudokuController implements Initializable {
 		spTrashCan.setOnDragOver(new EventHandler<DragEvent>() {
 			public void handle(DragEvent event) {
 				if (event.getGestureSource() != spTrashCan && event.getDragboard().hasContent(myTrashCanFormat)) {
-					// Don't let the user drag over items that already have a cell value set
+					Dragboard db = event.getDragboard();
+					Cell CellFrom = (Cell) db.getContent(myTrashCanFormat);
+					
+					if (CellFrom.getDropped()==true) {
+						event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+					}
 
-					event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+					
 				}
 				event.consume();
 			}
@@ -412,7 +417,7 @@ public class SudokuController implements Initializable {
 							
 							
 							game.getSudoku().getPuzzle()[CellTo.getiRow()][CellTo.getiCol()] = CellFrom.getiCellValue();
-							
+							CellTo.setDropped(true);
 							
 							success = true;
 						}
