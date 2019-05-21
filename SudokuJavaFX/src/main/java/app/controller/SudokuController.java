@@ -53,6 +53,8 @@ public class SudokuController implements Initializable {
 
 	private Game game;
 	
+	private HashSet<Cell> removable = new HashSet<Cell>();
+	
 	@FXML
 	private GridPane gpTop;
 
@@ -314,10 +316,18 @@ public class SudokuController implements Initializable {
 			for (int iRow = 0; iRow < s.getiSize(); iRow++) {
 
 				// The image control is going to be added to a StackPane, which can be centered
-
-				SudokuCell paneTarget = new SudokuCell(new Cell(iRow, iCol));
+				Cell ce = new Cell(iRow, iCol);
 				
+				if (removable.isEmpty()==false) {
+					for (Cell c : removable) {
+						if (c.getiRow()==iRow && c.getiCol()==iCol) {
+							ce.setDropped(true);
+						}
+					}
+				}
 				
+				SudokuCell paneTarget = new SudokuCell(ce);
+							
 
 				if (s.getPuzzle()[iRow][iCol] != 0) {
 					ImageView iv = new ImageView(GetImage(s.getPuzzle()[iRow][iCol]));
@@ -435,6 +445,7 @@ public class SudokuController implements Initializable {
 							
 							game.getSudoku().getPuzzle()[CellTo.getiRow()][CellTo.getiCol()] = CellFrom.getiCellValue();
 							CellTo.setDropped(true);
+							removable.add(CellTo);
 							
 							success = true;
 						}

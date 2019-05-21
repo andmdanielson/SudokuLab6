@@ -7,13 +7,15 @@ public class Cell implements Serializable {
 	private int iRow;
 	private int iCol;
 	private int iCellValue;
-	private boolean dropped = false;
+	private boolean dropped=false;
 
 	public Cell(int iRow, int iCol) {
 		super();
 		this.iRow = iRow;
 		this.iCol = iCol;
 	}
+	
+	
 
 	public int getiRow() {
 		return iRow;
