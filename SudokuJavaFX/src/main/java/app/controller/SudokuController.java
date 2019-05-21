@@ -89,6 +89,7 @@ public class SudokuController implements Initializable {
 	 */
 	@FXML
 	private void btnStartGame(ActionEvent event) {
+		hboxNumbers.setDisable(false);
 		CreateSudokuInstance();
 		BuildGrids();
 	}
@@ -257,13 +258,9 @@ public class SudokuController implements Initializable {
 				if (db.hasContent(myTrashCanFormat)) {
 					Cell CellFrom = (Cell) db.getContent(myTrashCanFormat);
 					
-					
-					
 					game.getSudoku().getPuzzle()[CellFrom.getiRow()][CellFrom.getiCol()] = 0;
 
 					game.getSudoku().PrintPuzzle();
-					
-					
 					
 					success=true;					
 					
@@ -440,8 +437,6 @@ public class SudokuController implements Initializable {
 							paneTarget.getChildren().clear();
 							paneTarget.getChildren().add(iv);
 							System.out.println(CellFrom.getiCellValue());
-							
-							
 							
 							game.getSudoku().getPuzzle()[CellTo.getiRow()][CellTo.getiCol()] = CellFrom.getiCellValue();
 							CellTo.setDropped(true);
