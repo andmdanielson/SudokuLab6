@@ -3,6 +3,8 @@ package app.controller;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 
 import app.Game;
@@ -50,7 +52,7 @@ import pkgHelper.PuzzleViolation;
 public class SudokuController implements Initializable {
 
 	private Game game;
-
+	
 	@FXML
 	private GridPane gpTop;
 
@@ -229,12 +231,12 @@ public class SudokuController implements Initializable {
 				if (event.getGestureSource() != spTrashCan && event.getDragboard().hasContent(myTrashCanFormat)) {
 					Dragboard db = event.getDragboard();
 					Cell CellFrom = (Cell) db.getContent(myTrashCanFormat);
-					
-					if (CellFrom.getDropped()==true) {
+										
+					if(CellFrom.getDropped()) {
 						event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
 					}
-
 					
+										
 				}
 				event.consume();
 			}
@@ -247,9 +249,16 @@ public class SudokuController implements Initializable {
 				if (db.hasContent(myTrashCanFormat)) {
 					Cell CellFrom = (Cell) db.getContent(myTrashCanFormat);
 					
+					
+					
 					game.getSudoku().getPuzzle()[CellFrom.getiRow()][CellFrom.getiCol()] = 0;
 
 					game.getSudoku().PrintPuzzle();
+					
+					
+					
+					success=true;					
+					
 					event.setDropCompleted(success);
 					event.consume();
 					
@@ -283,7 +292,7 @@ public class SudokuController implements Initializable {
 	private GridPane BuildSudokuGrid() {
 
 		Sudoku s = this.game.getSudoku();
-		//s.PrintPuzzle();
+		//System.out.println("updating grid");
 
 		SudokuStyler ss = new SudokuStyler(s);
 		GridPane gridPaneSudoku = new GridPane();
@@ -301,6 +310,8 @@ public class SudokuController implements Initializable {
 				// The image control is going to be added to a StackPane, which can be centered
 
 				SudokuCell paneTarget = new SudokuCell(new Cell(iRow, iCol));
+				
+				
 
 				if (s.getPuzzle()[iRow][iCol] != 0) {
 					ImageView iv = new ImageView(GetImage(s.getPuzzle()[iRow][iCol]));
