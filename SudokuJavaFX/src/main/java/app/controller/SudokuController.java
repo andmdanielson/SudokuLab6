@@ -90,6 +90,12 @@ public class SudokuController implements Initializable {
 		CreateSudokuInstance();
 		BuildGrids();
 	}
+	
+	
+	@FXML
+	private void btnEndGame(ActionEvent event) {
+		EndGame();
+	}
 
 	/**
 	 * CreateSudokuInstance - Create an instance of Sudoku, set the attribute in the
@@ -452,10 +458,16 @@ public class SudokuController implements Initializable {
 		return gridPaneSudoku;
 	}
 
-	private void EndGame() {
-		// Disable the hboxNumbers items so they can't be dragged
-		// Show message that the game is over
-		// Allow them to 'clear' cells / reset mistakes
+	private void EndGame() 
+	{
+
+		hboxNumbers.setDisable(true);//	Disable the hboxNumbers items so they can't be dragged
+		System.out.println("Game Over");
+		if (game.getSudoku().isSudoku()) {
+			System.out.println("Congratulations");
+		}
+		else
+			System.out.println("Better Luck Next Time");
 	}
 
 	private Image GetImage(int iValue) {
